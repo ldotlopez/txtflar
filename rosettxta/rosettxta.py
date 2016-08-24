@@ -5,15 +5,31 @@ from os import path
 
 
 import babelfish
+import chardet
 import langdetect
 
 
+class DetectError(Exception):
+    pass
+
+
 def get_language(buff):
-    return langdetect.detect(buff)
+    # Try with utf-8
+    try:
+        return langdetect.detect(buff.decode('utf-8'))
+    except UnicodeError:
+        pass
+
+    # Try guessing
+    guess = chardet.detect(buff)
+    if not guess:
+        raise DetectError('Unknow encoding')
+
+    return langdetect.detect(buff.decode(guess['encoding']))
 
 
 def get_file_language(filepath):
-    with open(filepath) as stream:
+    with open(filepath, 'rb') as stream:
         ret = get_language(stream.read())
 
     return ret

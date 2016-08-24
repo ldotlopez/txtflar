@@ -18,6 +18,7 @@ setup(
     long_description=open('README').read(),
     install_requires=[
         "babelfish",
+        "chardet",
         "langdetect"
     ],
 )

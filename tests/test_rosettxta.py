@@ -9,6 +9,10 @@ import rosettxta
 sample_dir = path.dirname(path.realpath(__file__)) + "/samples"
 
 
+def sample(filepath):
+    return sample_dir + "/" + filepath
+
+
 class TestRosettxta(unittest.TestCase):
     tests = [
         ('en',
@@ -21,16 +25,14 @@ class TestRosettxta(unittest.TestCase):
 
     def test_get_language(self):
         for (lang, filename, x) in self.tests:
-            got = rosettxta.get_file_language(sample_dir + "/" + filename)
+            got = rosettxta.get_file_language(sample(filename))
 
             self.assertEqual(lang, got, filename)
 
     def test_get_language_aware_filename(self):
         for (x, filename, language_aware_filename) in self.tests:
-            expected = sample_dir + "/" + language_aware_filename
-
-            got = rosettxta.get_language_aware_filename(
-                sample_dir + "/" + filename)
+            expected = sample(language_aware_filename)
+            got = rosettxta.get_language_aware_filename(sample(filename))
 
             self.assertEqual(expected, got, filename)
 
@@ -59,6 +61,9 @@ class TestRosettxta(unittest.TestCase):
             'molo.es.md'
         )
 
+    def test_non_utf_file(self):
+        lang = rosettxta.get_file_language(sample('spa-es-non-utf8-file.srt'))
+        self.assertEqual(lang, 'es')
 
 if __name__ == '__main__':
     unittest.main()
