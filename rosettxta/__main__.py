@@ -51,7 +51,7 @@ def main():
             continue
 
         if args.dry_run:
-            msg = "mv '{src} '{dst}'"
+            msg = "mv '{src}' '{dst}'"
             msg = msg.format(
                 src=_escape_filename(fn), dst=_escape_filename(dst_fn))
             print(msg)
