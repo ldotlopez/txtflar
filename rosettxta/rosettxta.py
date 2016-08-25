@@ -32,10 +32,16 @@ def get_language(buff):
 
     # Try guessing
     guess = chardet.detect(buff)
-    if not guess:
-        raise EncodingDetectError()
+    if not guess or guess['encoding'] is None:
+        msg = "Unable to detect encoding"
+        raise EncodingDetectError(msg)
 
-    return langdetect.detect(buff.decode(guess['encoding']))
+    try:
+        return langdetect.detect(buff.decode(guess['encoding']))
+    except UnicodeError as e:
+        msg = "Encoding '{encoding}' is incorrect: {e}"
+        msg = msg.format(encoding=guess['encoding'], e=str(e))
+        raise EncodingDetectError(msg)
 
 
 def get_file_language(filepath, chunk=1024):
