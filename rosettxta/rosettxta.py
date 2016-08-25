@@ -38,9 +38,9 @@ def get_language(buff):
     return langdetect.detect(buff.decode(guess['encoding']))
 
 
-def get_file_language(filepath):
+def get_file_language(filepath, chunk=1024):
     with open(filepath, 'rb') as stream:
-        ret = get_language(stream.read())
+        ret = get_language(stream.read(chunk))
 
     return ret
 
