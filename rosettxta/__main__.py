@@ -4,13 +4,18 @@
 import argparse
 import os
 import shutil
+import sys
 from os import path
 
 
 import rosettxta
 
 
-if __name__ == '__main__':
+def _escape_filename(filename):
+    return filename.replace("\\", "\\\\").replace("'", "\\'")
+
+
+def main():
     parser = argparse.ArgumentParser(prog='rosettxta', add_help=True)
     parser.add_argument(
         '-n', '--dry-run',
@@ -30,28 +35,47 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     for fn in args.filenames:
-        filename = path.realpath(fn)
-        new_filename = rosettxta.get_language_aware_filename(filename)
+        src_fn = path.realpath(fn)
+        try:
+            dst_fn = rosettxta.get_language_aware_filename(src_fn)
+        except rosettxta.DetectError as e:
+            msg = "# E: '{filename}' detect error: {msg}"
+            msg = msg.format(filename=_escape_filename(fn), msg=str(e))
+            print(msg, file=sys.stderr)
+            continue
 
-        if filename == new_filename:
+        if src_fn == dst_fn:
             msg = "# I: '{filename}' is already correct"
             msg = msg.format(filename=fn)
-            print(msg)
+            print(msg, file=sys.stderr)
             continue
 
         if args.dry_run:
-            msg = "mv '{old} '{new}'"
-            msg = msg.format(old=fn, new=new_filename)
+            msg = "mv '{src} '{dst}'"
+            msg = msg.format(
+                src=_escape_filename(fn), dst=_escape_filename(dst_fn))
             print(msg)
             continue
 
-        if path.exists(new_filename):
+        if path.exists(dst_fn):
             if not args.force:
-                msg = "# E: '{new}' already exists"
-                msg = msg.format(new=new_filename)
-                print(msg)
+                msg = ("# [E] Destination file '{filename}' already exists "
+                       "and --force wasn't especified")
+                msg = msg.format(new=_escape_filename(dst_fn))
+                print(msg, file=sys.stderr)
                 continue
-            else:
-                os.unlink(new_filename)
 
-        shutil.move(fn, new_filename)
+            try:
+                os.unlink(dst_fn)
+            except OSError as e:
+                msg = ("# [E] Unable to remove previous destination file "
+                       "'{filename}': {msg}")
+                msg = msg.format(filename=_escape_filename(fn), msg=str(e))
+                print(msg, file=sys.stderr)
+                continue
+
+        shutil.move(fn, dst_fn)
+
+
+if __name__ == '__main__':
+    main()

@@ -29,6 +29,10 @@ class TestRosettxta(unittest.TestCase):
 
             self.assertEqual(lang, got, filename)
 
+    def test_no_features_text_exception(self):
+        with self.assertRaises(rosettxta.LanguageDetectError):
+            rosettxta.get_file_language(sample('xxx-xx-no-features-lang.txt'))
+
     def test_get_language_aware_filename(self):
         for (x, filename, language_aware_filename) in self.tests:
             expected = sample(language_aware_filename)

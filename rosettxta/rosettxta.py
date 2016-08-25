@@ -13,17 +13,27 @@ class DetectError(Exception):
     pass
 
 
+class LanguageDetectError(DetectError):
+    pass
+
+
+class EncodingDetectError(DetectError):
+    pass
+
+
 def get_language(buff):
     # Try with utf-8
     try:
         return langdetect.detect(buff.decode('utf-8'))
+    except langdetect.lang_detect_exception.LangDetectException as e:
+        raise LanguageDetectError(str(e)) from e
     except UnicodeError:
         pass
 
     # Try guessing
     guess = chardet.detect(buff)
     if not guess:
-        raise DetectError('Unknow encoding')
+        raise EncodingDetectError()
 
     return langdetect.detect(buff.decode(guess['encoding']))
 
