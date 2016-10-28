@@ -32,6 +32,12 @@ def main(argv=None):
 
     args = parser.parse_args(argv)
     for fn in args.filenames:
+        if not os.path.exists(fn):
+            msg = "# E: '{filename}' doesn't exists"
+            msg = msg.format(filename=_escape_filename(fn))
+            print(msg, file=sys.stderr)
+            continue
+
         src_fn = path.realpath(fn)
         try:
             dst_fn = rosettxta.get_language_aware_filename(src_fn)
@@ -63,7 +69,7 @@ def main(argv=None):
             if not args.force:
                 msg = ("# [E] Destination file '{filename}' already exists "
                        "and --force wasn't especified")
-                msg = msg.format(new=_escape_filename(dst_fn))
+                msg = msg.format(filename=_escape_filename(dst_fn))
                 print(msg, file=sys.stderr)
                 continue
 
