@@ -35,7 +35,11 @@ setup(
     author='Luis López',
     author_email='luis@cuarentaydos.com',
     packages=['txtflar'],
-    scripts=[],
+    entry_points={
+        'console_scripts': [
+            'txtflar = txtflar.cli:main',
+        ],
+    },
     url='https://github.com/ldotlopez/txtflar',
     license='LICENSE.txt',
     description=(
