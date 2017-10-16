@@ -18,12 +18,20 @@
 # USA.
 
 
-from distutils.core import setup
+from setuptools import setup
+import txtflar
 
+with open("requirements.txt") as fh:
+    pkgs = fh.readlines()
+
+pkgs = [x.strip() for x in pkgs]
+pkgs = [x for x in pkgs if x and x[0] != '#']
+
+version = '.'.join([str(x) for x in txtflar.version])
 
 setup(
     name='txtflar',
-    version='0.0.0.20171016.1',
+    version=version,
     author='Luis López',
     author_email='luis@cuarentaydos.com',
     packages=['txtflar'],
@@ -36,9 +44,5 @@ setup(
         'language of its contents'
     ),
     long_description=open('README').read(),
-    install_requires=[
-        "babelfish",
-        "chardet",
-        "langdetect"
-    ],
+    install_requires=pkgs,
 )
