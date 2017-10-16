@@ -1,3 +1,23 @@
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2015 Luis López <luis@cuarentaydos.com>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+# USA.
+
+
 import argparse
 import os
 import shutil
@@ -5,7 +25,7 @@ import sys
 from os import path
 
 
-import rosettxta
+import txtflar
 
 
 def _escape_filename(filename):
@@ -13,7 +33,7 @@ def _escape_filename(filename):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(prog='rosettxta', add_help=True)
+    parser = argparse.ArgumentParser(prog='txtflar', add_help=True)
     parser.add_argument(
         '-n', '--dry-run',
         action='store_true',
@@ -40,13 +60,13 @@ def main(argv=None):
 
         src_fn = path.realpath(fn)
         try:
-            dst_fn = rosettxta.get_language_aware_filename(src_fn)
+            dst_fn = txtflar.get_language_aware_filename(src_fn)
         except OSError as e:
             msg = "# E: '{filename}' read error: {msg}"
             msg = msg.format(filename=_escape_filename(fn), msg=str(e))
             print(msg, file=sys.stderr)
             continue
-        except rosettxta.DetectError as e:
+        except txtflar.DetectError as e:
             msg = "# E: '{filename}' detect error: {msg}"
             msg = msg.format(filename=_escape_filename(fn), msg=str(e))
             print(msg, file=sys.stderr)
@@ -83,3 +103,7 @@ def main(argv=None):
                 continue
 
         shutil.move(fn, dst_fn)
+
+
+if __name__ == '__main__':
+    main()

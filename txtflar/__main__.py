@@ -18,27 +18,7 @@
 # USA.
 
 
-from distutils.core import setup
+from . import cli
 
-
-setup(
-    name='txtflar',
-    version='0.0.0.20171016.1',
-    author='Luis López',
-    author_email='luis@cuarentaydos.com',
-    packages=['txtflar'],
-    scripts=[],
-    url='https://github.com/ldotlopez/txtflar',
-    license='LICENSE.txt',
-    description=(
-        'TeXT file language-aware rename'
-        'Automatically rename subtitles (and text files) based on the '
-        'language of its contents'
-    ),
-    long_description=open('README').read(),
-    install_requires=[
-        "babelfish",
-        "chardet",
-        "langdetect"
-    ],
-)
+if __name__ == '__main__':
+    cli.main()
