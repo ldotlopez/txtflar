@@ -25,18 +25,18 @@ from .txtflar import (
     get_file_language,
     get_filename_for_language,
     get_language,
-    get_language_aware_filename
+    get_language_aware_filename,
 )
 
 version = [0, 0, 1]
 
 __all__ = [
-    'DetectError',
-    'EncodingDetectError',
-    'LanguageDetectError',
-    'get_file_language',
-    'get_language_aware_filename',
-    'get_language',
-    'get_filename_for_language',
-    'version'
+    "DetectError",
+    "EncodingDetectError",
+    "LanguageDetectError",
+    "get_file_language",
+    "get_language_aware_filename",
+    "get_language",
+    "get_filename_for_language",
+    "version",
 ]

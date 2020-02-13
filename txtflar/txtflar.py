@@ -41,7 +41,7 @@ class EncodingDetectError(DetectError):
 def get_language(buff):
     # Try with utf-8
     try:
-        return langdetect.detect(buff.decode('utf-8'))
+        return langdetect.detect(buff.decode("utf-8"))
     except langdetect.lang_detect_exception.LangDetectException as e:
         raise LanguageDetectError(str(e)) from e
     except UnicodeError:
@@ -49,20 +49,20 @@ def get_language(buff):
 
     # Try guessing
     guess = chardet.detect(buff)
-    if not guess or guess['encoding'] is None:
+    if not guess or guess["encoding"] is None:
         msg = "Unable to detect encoding"
         raise EncodingDetectError(msg)
 
     try:
-        return langdetect.detect(buff.decode(guess['encoding']))
+        return langdetect.detect(buff.decode(guess["encoding"]))
     except UnicodeError as e:
         msg = "Encoding '{encoding}' is incorrect: {e}"
-        msg = msg.format(encoding=guess['encoding'], e=str(e))
+        msg = msg.format(encoding=guess["encoding"], e=str(e))
         raise EncodingDetectError(msg)
 
 
 def get_file_language(filepath, chunk=1024):
-    with open(filepath, 'rb') as stream:
+    with open(filepath, "rb") as stream:
         ret = get_language(stream.read(chunk))
 
     return ret
@@ -82,7 +82,4 @@ def get_filename_for_language(filepath, language):
 
 
 def get_language_aware_filename(filepath):
-    return get_filename_for_language(
-        filepath,
-        get_file_language(filepath)
-    )
+    return get_filename_for_language(filepath, get_file_language(filepath))
