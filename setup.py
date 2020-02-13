@@ -19,7 +19,7 @@
 
 
 from setuptools import setup
-import txtflar
+from datetime import datetime
 
 with open("requirements.txt") as fh:
     pkgs = fh.readlines()
@@ -27,7 +27,7 @@ with open("requirements.txt") as fh:
 pkgs = [x.strip() for x in pkgs]
 pkgs = [x for x in pkgs if x and x[0] != '#']
 
-version = '.'.join([str(x) for x in txtflar.version])
+version = '1.0.' + datetime.now().strftime('%Y%m%d%H%M%S')
 
 setup(
     name='txtflar',

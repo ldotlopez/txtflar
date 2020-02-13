@@ -28,7 +28,6 @@ from .txtflar import (
     get_language_aware_filename,
 )
 
-version = [0, 0, 1]
 
 __all__ = [
     "DetectError",
