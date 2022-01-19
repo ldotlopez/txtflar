@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2015 Luis López <luis@cuarentaydos.com>
+# Copyright (C) 2015-2022 Luis López <luis@cuarentaydos.com>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -21,7 +21,7 @@
 import unittest
 from os import path
 
-import txtflar
+import txtflar  # type: ignore[import]
 
 
 sample_dir = path.dirname(path.realpath(__file__)) + "/samples"

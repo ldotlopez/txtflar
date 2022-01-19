@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2015 Luis López <luis@cuarentaydos.com>
+# Copyright (C) 2015-2022 Luis López <luis@cuarentaydos.com>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -21,9 +21,9 @@
 from os import path
 
 
-import babelfish
-import chardet
-import langdetect
+import babelfish  # type: ignore[import]
+import chardet  # type: ignore[import]
+import langdetect  # type: ignore[import]
 
 
 class DetectError(Exception):
@@ -56,8 +56,7 @@ def get_language(buff):
     try:
         return langdetect.detect(buff.decode(guess["encoding"]))
     except UnicodeError as e:
-        msg = "Encoding '{encoding}' is incorrect: {e}"
-        msg = msg.format(encoding=guess["encoding"], e=str(e))
+        msg = f"Encoding '{guess['encoding']}' is incorrect: {e}"
         raise EncodingDetectError(msg)
 
 
@@ -78,7 +77,7 @@ def get_filename_for_language(filepath, language):
     except (IndexError, babelfish.LanguageReverseError):
         pass
 
-    return name + "." + language + ext
+    return f"{name}.{language}{ext}"
 
 
 def get_language_aware_filename(filepath):

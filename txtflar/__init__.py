@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2015 Luis López <luis@cuarentaydos.com>
+# Copyright (C) 2015-2022 Luis López <luis@cuarentaydos.com>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -37,5 +37,4 @@ __all__ = [
     "get_language_aware_filename",
     "get_language",
     "get_filename_for_language",
-    "version",
 ]
