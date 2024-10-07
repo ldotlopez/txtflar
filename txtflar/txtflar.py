@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2015-2022 Luis López <luis@cuarentaydos.com>
 #
@@ -19,7 +18,6 @@
 
 
 from os import path
-
 
 import babelfish  # type: ignore[import]
 import chardet  # type: ignore[import]

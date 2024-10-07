@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2015-2022 Luis López <luis@cuarentaydos.com>
 #
@@ -23,7 +22,6 @@ from os import path
 
 import txtflar  # type: ignore[import]
 
-
 sample_dir = path.dirname(path.realpath(__file__)) + "/samples"
 
 
@@ -46,7 +44,7 @@ class TestTxtflat(unittest.TestCase):
     ]
 
     def test_get_language(self):
-        for (lang, filename, x) in self.tests:
+        for lang, filename, x in self.tests:
             got = txtflar.get_file_language(sample(filename))
 
             self.assertEqual(lang, got, filename)
@@ -56,7 +54,7 @@ class TestTxtflat(unittest.TestCase):
             txtflar.get_file_language(sample("xxx-xx-no-features-lang.txt"))
 
     def test_get_language_aware_filename(self):
-        for (x, filename, language_aware_filename) in self.tests:
+        for x, filename, language_aware_filename in self.tests:
             expected = sample(language_aware_filename)
             got = txtflar.get_language_aware_filename(sample(filename))
 

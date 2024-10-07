@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2015-2022 Luis López <luis@cuarentaydos.com>
 #

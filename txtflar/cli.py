@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2015-2022 Luis López <luis@cuarentaydos.com>
 #
@@ -23,7 +22,6 @@ import os
 import shutil
 import sys
 from os import path
-
 
 import txtflar
 
@@ -95,9 +93,7 @@ def main(argv=None):
 
         if args.dry_run:
             msg = "mv '{src}' '{dst}'"
-            msg = msg.format(
-                src=_escape_filename(fn), dst=_escape_filename(dst_fn)
-            )
+            msg = msg.format(src=_escape_filename(fn), dst=_escape_filename(dst_fn))
             output(msg)
             continue
 

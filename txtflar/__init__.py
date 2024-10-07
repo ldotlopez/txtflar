@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2015-2022 Luis López <luis@cuarentaydos.com>
 #
@@ -27,7 +26,6 @@ from .txtflar import (
     get_language,
     get_language_aware_filename,
 )
-
 
 __all__ = [
     "DetectError",
