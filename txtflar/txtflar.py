@@ -19,9 +19,9 @@
 
 from os import path
 
-import babelfish  # type: ignore[import]
-import chardet  # type: ignore[import]
-import langdetect  # type: ignore[import]
+import babelfish
+import chardet
+import langdetect
 
 
 class DetectError(Exception):

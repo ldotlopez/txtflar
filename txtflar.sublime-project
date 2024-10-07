@@ -1,0 +1,28 @@
+{
+    "folders":
+    [
+        {
+            "file_exclude_patterns": [
+                "*.pyc",
+            ],
+            "folder_exclude_patterns": [
+                "*.egg-info",
+                ".mypy_cache",
+                ".venv",
+                "__pycache__",
+                "ATTIC",
+                "build"
+            ],
+            "follow_symlinks": true,
+            "path": ".",
+        }
+    ],
+    "settings": {
+        // "isorted.float_to_top": true,
+        // "isorted.isort_on_save": true,
+        // "isorted.profile": "black",
+        // "sublack.black_blackd_autostart": true,
+        // "sublack.black_on_save": true,
+        // "sublack.black_use_blackd": true,
+    }
+}

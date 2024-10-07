@@ -1,0 +1,43 @@
+name: Publish Python Distribution
+
+on:
+  push:
+    tags:
+      - 'v*' # Trigger only on tags starting with v
+
+jobs:
+  publish:
+    name: Create release to GitHub
+    runs-on: ubuntu-latest
+    permissions:
+      # Required for creating GitHub Releases
+      contents: write
+      # Required for PyPI trusted publishing (OIDC)
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/checkout@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install build dependencies
+        run: python -m pip install uv
+
+      - name: Build package
+        run: uv build
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*.tar.gz
+            dist/*.whl
+          # This pulls the tag name automatically from the trigger
+          tag_name: ${{ github.ref_name }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
