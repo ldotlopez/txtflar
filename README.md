@@ -7,7 +7,6 @@
 [![CI](https://github.com/ldotlopez/txtflar/actions/workflows/ci.yml/badge.svg)](https://github.com/ldotlopez/txtflar/actions/workflows/ci.yml)
 [![Create release](https://github.com/ldotlopez/txtflar/actions/workflows/release.yml/badge.svg)](https://github.com/ldotlopez/txtflar/actions/workflows/release.yml)
 [![Upload Python package](https://github.com/ldotlopez/txtflar/actions/workflows/publish.yml/badge.svg)](https://github.com/ldotlopez/txtflar/actions/workflows/publish.yml)
-[![CodeQL](https://github.com/ldotlopez/txtflar/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/ldotlopez/txtflar/actions/workflows/codeql-analysis.yml)
 
 
 <!-- Sponsors -->
