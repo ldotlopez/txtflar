@@ -5,8 +5,7 @@
 [![Python versions](https://img.shields.io/pypi/pyversions/txtflar)](https://pypi.org/project/txtflar/)
 [![License](https://img.shields.io/github/license/ldotlopez/txtflar)](LICENSE.txt)
 [![CI](https://github.com/ldotlopez/txtflar/actions/workflows/ci.yml/badge.svg)](https://github.com/ldotlopez/txtflar/actions/workflows/ci.yml)
-[![Create release](https://github.com/ldotlopez/txtflar/actions/workflows/release.yml/badge.svg)](https://github.com/ldotlopez/txtflar/actions/workflows/release.yml)
-[![Upload Python package](https://github.com/ldotlopez/txtflar/actions/workflows/publish.yml/badge.svg)](https://github.com/ldotlopez/txtflar/actions/workflows/publish.yml)
+[![Release workflow](https://github.com/ldotlopez/txtflar/actions/workflows/release.yml/badge.svg)](https://github.com/ldotlopez/txtflar/actions/workflows/release.yml)
 
 
 <!-- Sponsors -->

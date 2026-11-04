@@ -1,40 +1,93 @@
-name: Create Release
+name: Release
 
+# Push a tag like v1.2.3 (or v1.2.3a1 / v1.2.3rc1) to build, create a GitHub
+# release and publish to PyPI. The tag must match the version in pyproject.toml.
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
+
+permissions:
+  contents: read
 
 jobs:
-  build-and-release:
+  build:
+    name: Build distributions
+    runs-on: ubuntu-latest
+    outputs:
+      prerelease: ${{ steps.meta.outputs.prerelease }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@v10
+        with:
+          enable-cache: true
+
+      - name: Verify tag matches project version
+        id: meta
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          version="$(uv version --short)"
+          if [ "v${version}" != "${TAG}" ]; then
+            echo "::error::Tag ${TAG} does not match pyproject version ${version}"
+            exit 1
+          fi
+          # Anything that isn't a plain X.Y.Z(.N) version is a pre-release.
+          if [[ "${version}" =~ ^[0-9]+(\.[0-9]+)*$ ]]; then
+            echo "prerelease=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "prerelease=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install dependencies
+        run: uv sync --locked
+
+      - name: Run tests
+        run: uv run python -m unittest discover -s tests -v
+
+      - name: Build sdist and wheel
+        run: uv build --no-sources
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+
+  github-release:
+    name: GitHub release
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    
     steps:
-      - uses: actions/checkout@v7
-
-      - name: Set up Python
-        uses: actions/setup-python@v7
+      - uses: actions/download-artifact@v8
         with:
-          python-version: '3.x'
-
-      - name: Build package
-        run: |
-          pip install uv
-          uv build
-
-      # This stores the files so the next workflow can find them
-      - name: Upload artifacts for publishing
-        uses: actions/upload-artifact@v4
-        with:
-          name: python-package-distributions
+          name: dist
           path: dist/
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           files: dist/*
-          tag_name: ${{ github.ref_name }}
           generate_release_notes: true
-          # draft: true # Uncomment this to manual-trigger the publish workflow
+          prerelease: ${{ needs.build.outputs.prerelease == 'true' }}
+
+  publish-pypi:
+    name: Publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/txtflar
+    permissions:
+      id-token: write # PyPI trusted publishing (OIDC), no API token needed
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist/
+
+      - uses: pypa/gh-action-pypi-publish@release/v1
