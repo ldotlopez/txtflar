@@ -21,6 +21,18 @@
         "minor"
       ],
       "automerge": true
+    },
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "automerge": true
+    },
+    {
+      "matchFileNames": [
+        ".python-version"
+      ],
+      "enabled": false
     }
   ]
 }
